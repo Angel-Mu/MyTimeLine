@@ -62,6 +62,7 @@
             if (self.dataSource.count != 0) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tweetTableView reloadData];
+                    [refresh endRefreshing];
                     [self dismiss];
                 });
             }else{
@@ -88,14 +89,8 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     refresh = [[UIRefreshControl alloc] init];
     refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
-    [refresh addTarget:self action:@selector(stopRefresh)forControlEvents:UIControlEventValueChanged];
+    [refresh addTarget:self action:@selector(getTimeLine)forControlEvents:UIControlEventValueChanged];
     [self.tweetTableView addSubview:refresh];
-}
-
-- (void)stopRefresh
-{
-    [self getTimeLine];
-    [refresh endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
